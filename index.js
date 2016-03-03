@@ -1,10 +1,18 @@
 var inlineCss = require('inline-css');
 var escapeHtml = require('escape-html');
+var siphonMQ = require('siphon-media-query');
+var parser = new DOMParser();
 
 var PH_HTML =
 `<html>
   <head>
-    <style>.button { color: blue; }</style>
+    <style>
+      .button { color: blue; }
+
+      @media screen and (min-width: 600px) {
+        .button { background-color: red; }
+      }
+    </style>
   </head>
   <body>
     <div class="button"></div>
@@ -33,15 +41,21 @@ cssInput.value = PH_CSS;
 compileButton.addEventListener('click', inline);
 
 function inline() {
+  var css = cssInput.value;
+
   var opts = {
     url: '/',
-    extraCss: cssInput.value,
+    extraCss: css,
     preserveMediaQueries: true,
     applyLinkTags: false
   }
 
+  var mqCss = siphonMQ(css);
+
   inlineCss(htmlInput.value, opts)
     .then(function(html) {
-      output.innerHTML = escapeHtml(html);
+      var dom = parser.parseFromString(html, 'text/html');
+      dom.querySelector('style').innerHTML += mqCss;
+      output.innerHTML = escapeHtml($(dom).children('html').html());
     });
 }
