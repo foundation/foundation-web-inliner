@@ -1,3 +1,5 @@
+if (!document.querySelector('[data-inliner]')) return;
+
 var beautifyHtml = require('js-beautify').html;
 var escapeHtml = require('escape-html');
 var inlineCss = require('inline-css');
