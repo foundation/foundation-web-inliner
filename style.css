@@ -7,4 +7,6 @@
 .inliner-output {
   font-family: 'Courier New', monospace;
   white-space: pre-wrap;
+  height: 600px;
+  overflow: auto;
 }

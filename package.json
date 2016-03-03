@@ -17,6 +17,7 @@
   "dependencies": {
     "escape-html": "^1.0.3",
     "gulp-inline-css": "^3.0.1",
+    "html-minifier": "^1.2.0",
     "htmltidy": "0.0.6",
     "inky": "^0.2.0",
     "inline-css": "^2.1.1",
