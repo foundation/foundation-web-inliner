@@ -1,0 +1,27 @@
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Inky Inliner</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/foundation/6.1.2/foundation.min.css">
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="row">
+      <div class="small-6 columns">
+        <label for="htmlInput">HTML</label>
+        <textarea class="inliner-textarea" data-input-html id="htmlInput"></textarea>
+
+        <label for="cssInput">CSS</label>
+        <textarea class="inliner-textarea" data-input-css id="cssInput"></textarea>
+
+        <button type="button" class="large expanded button" data-compile>Inline!</button>
+      </div>
+      <div class="small-6 columns">
+        <label>Output</label>
+        <div class="inliner-output" data-output></div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>

@@ -1,0 +1,10 @@
+.inliner-textarea {
+  font-family: 'Courier New', monospace;
+  height: 40vh;
+  margin-bottom: 1rem;
+}
+
+.inliner-output {
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+}
