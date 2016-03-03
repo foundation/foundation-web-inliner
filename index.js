@@ -16,12 +16,15 @@ compileButton.addEventListener('click', inline);
 function inline() {
   if (!htmlInput.value) return;
 
+  var html = htmlInput.value;
   var css = cssInput.value;
+  var mqCss = siphonMQ(css);
 
   var inlineOpts = {
     url: '/',
     extraCss: css,
     preserveMediaQueries: true,
+    applyStyleTags: !!hasStyleTag(html),
     applyLinkTags: false
   }
 
@@ -30,19 +33,27 @@ function inline() {
     quiet: true
   }
 
-  var mqCss = siphonMQ(css);
-
-  inlineCss(htmlInput.value, inlineOpts)
+  inlineCss(html, inlineOpts)
     .then(function(html) {
       // Convert the raw string into a full DOM tree
       var dom = parser.parseFromString(html, 'text/html');
 
+      if (!dom.querySelector('style')) {
+        var styleTag = document.createElement('style');
+        dom.querySelector('head').appendChild(styleTag);
+      }
+
       // Append media query-specific CSS to the <style> tag
-      dom.querySelector('style').innerHTML += mqCss;
+      styleTag.innerHTML += mqCss;
 
       // Convert the DOM tree back to a string
       var newHtml = $(dom).children('html').html();
 
       output.innerHTML = escapeHtml(beautifyHtml(newHtml, beautifyOpts));
     });
+}
+
+function hasStyleTag(html) {
+  var html = parser.parseFromString(html, 'text/html');
+  return html.querySelector('style');
 }
