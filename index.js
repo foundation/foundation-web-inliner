@@ -6,18 +6,21 @@ var inlineCss = require('inline-css');
 var parser = new DOMParser();
 var siphonMQ = require('siphon-media-query');
 var htmlMinifier = require('html-minifier').minify;
+var clipboard = require('clipboard-js');
 
 var htmlInput = document.querySelector('[data-input-html]');
 var cssInput = document.querySelector('[data-input-css]');
 var output = document.querySelector('[data-output]');
 var compileButton = document.querySelector('[data-compile]');
 var compressFlag = document.querySelector('[data-compress]');
+var copyButton = document.querySelector('[data-output-copy]');
 
 var DOCTYPE = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 
 var HTML_TAG = '<html xmlns="http://www.w3.org/1999/xhtml">';
 
 compileButton.addEventListener('click', inline);
+copyButton.addEventListener('click', copyHtml);
 
 function inline() {
   if (!htmlInput.value) return;
@@ -87,4 +90,17 @@ function inline() {
 function hasStyleTag(html) {
   var html = parser.parseFromString(html, 'text/html');
   return html.querySelector('style');
+}
+
+function copyHtml() {
+  var text = output.innerHTML.replace(/&lt;/g, '<').replace(/&gt;/g, '>');
+
+  clipboard.copy(text).then(function() {
+    var oldValue = copyButton.innerHTML;
+    copyButton.innerHTML = 'Successfully copied!';
+
+    window.setTimeout(function() {
+      copyButton.innerHTML = oldValue;
+    }, 3000);
+  });
 }
