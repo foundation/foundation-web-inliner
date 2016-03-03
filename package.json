@@ -19,6 +19,7 @@
     "htmltidy": "0.0.6",
     "inky": "^0.2.0",
     "inline-css": "^2.1.1",
+    "js-beautify": "^1.6.2",
     "media-query-extractor": "^0.1.1",
     "siphon-media-query": "^1.0.0",
     "vinyl-dom": "^1.0.0",

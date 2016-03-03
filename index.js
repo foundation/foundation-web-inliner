@@ -1,7 +1,8 @@
-var inlineCss = require('inline-css');
+var beautifyHtml = require('js-beautify').html;
 var escapeHtml = require('escape-html');
-var siphonMQ = require('siphon-media-query');
+var inlineCss = require('inline-css');
 var parser = new DOMParser();
+var siphonMQ = require('siphon-media-query');
 
 var PH_HTML =
 `<html>
@@ -43,19 +44,31 @@ compileButton.addEventListener('click', inline);
 function inline() {
   var css = cssInput.value;
 
-  var opts = {
+  var inlineOpts = {
     url: '/',
     extraCss: css,
     preserveMediaQueries: true,
     applyLinkTags: false
   }
 
+  var beautifyOpts = {
+    indent_size: 2,
+    quiet: true
+  }
+
   var mqCss = siphonMQ(css);
 
-  inlineCss(htmlInput.value, opts)
+  inlineCss(htmlInput.value, inlineOpts)
     .then(function(html) {
+      // Convert the raw string into a full DOM tree
       var dom = parser.parseFromString(html, 'text/html');
+
+      // Append media query-specific CSS to the <style> tag
       dom.querySelector('style').innerHTML += mqCss;
-      output.innerHTML = escapeHtml($(dom).children('html').html());
+
+      // Convert the DOM tree back to a string
+      var newHtml = $(dom).children('html').html();
+
+      output.innerHTML = escapeHtml(beautifyHtml(newHtml, beautifyOpts));
     });
 }
