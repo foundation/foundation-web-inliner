@@ -1,6 +1,6 @@
 if (!document.querySelector('[data-inliner]')) return;
 
-var beautifyHtml = require('js-beautify').html;
+var beautifyHtml = require('./node_modules/js-beautify/js/lib/beautify-html.js').html_beautify;
 var escapeHtml = require('escape-html');
 var inlineCss = require('inline-css');
 var parser = new DOMParser();
@@ -21,6 +21,8 @@ var HTML_TAG = '<html xmlns="http://www.w3.org/1999/xhtml">';
 
 compileButton.addEventListener('click', inline);
 copyButton.addEventListener('click', copyHtml);
+
+document.querySelector('[data-inliner]').classList.remove('is-not-loaded');
 
 function inline() {
   if (!htmlInput.value) return;
