@@ -1,13 +1,13 @@
 {
-  "name": "inky-inliner",
+  "name": "web-inliner",
   "version": "1.0.0",
-  "description": "",
+  "description": "Web inliner for foundation.zurb.com.",
   "main": "index.js",
   "scripts": {
     "start": "watchify index.js -d -o script.js",
     "build": "browserify index.js | uglifyjs > inliner.min.js"
   },
-  "author": "",
+  "author": "ZURB <foundation@zurb.com> (http://foundation.zurb.com)",
   "license": "ISC",
   "devDependencies": {
     "browserify": "^13.0.0",
