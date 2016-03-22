@@ -57,9 +57,10 @@ function inline() {
       // Convert the raw string into a full DOM tree
       var dom = parser.parseFromString(html, 'text/html');
       var domBody = dom.querySelector('body');
+      var styleTag = dom.querySelector('style');
 
       if (!dom.querySelector('style')) {
-        var styleTag = document.createElement('style');
+        styleTag = document.createElement('style');
         dom.querySelector('head').appendChild(styleTag);
       }
 
