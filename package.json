@@ -4,7 +4,7 @@
   "description": "Web inliner for foundation.zurb.com.",
   "main": "index.js",
   "scripts": {
-    "start": "watchify index.js -d -o script.js",
+    "start": "watchify index.js --debug -o script.js",
     "build": "browserify index.js | uglifyjs > inliner.min.js"
   },
   "author": "ZURB <foundation@zurb.com> (http://foundation.zurb.com)",

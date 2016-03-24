@@ -10,3 +10,7 @@
   height: 600px;
   overflow: auto;
 }
+
+.is-visible {
+  display: block !important;
+}

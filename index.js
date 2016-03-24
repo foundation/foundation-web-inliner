@@ -14,6 +14,7 @@ var output = document.querySelector('[data-output]');
 var compileButton = document.querySelector('[data-compile]');
 var compressFlag = document.querySelector('[data-compress]');
 var copyButton = document.querySelector('[data-output-copy]');
+var errorMessage = document.querySelector('[data-error]');
 
 var DOCTYPE = '<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">';
 
@@ -53,41 +54,47 @@ function inline() {
   }
 
   inlineCss(html, inlineOpts)
-    .then(function(html) {
-      // Convert the raw string into a full DOM tree
-      var dom = parser.parseFromString(html, 'text/html');
-      var domBody = dom.querySelector('body');
-      var styleTag = dom.querySelector('style');
+    .then(success, error);
 
-      if (!dom.querySelector('style')) {
-        styleTag = document.createElement('style');
-        dom.querySelector('head').appendChild(styleTag);
-      }
+  function success(html) {
+    // Convert the raw string into a full DOM tree
+    var dom = parser.parseFromString(html, 'text/html');
+    var domBody = dom.querySelector('body');
+    var styleTag = dom.querySelector('style');
 
-      // Append media query-specific CSS to the <style> tag
-      styleTag.innerHTML += mqCss;
+    if (!dom.querySelector('style')) {
+      styleTag = document.createElement('style');
+      dom.querySelector('head').appendChild(styleTag);
+    }
 
-      // Move the style tag into the body
-      domBody.insertBefore(styleTag, domBody.firstChild);
+    // Append media query-specific CSS to the <style> tag
+    styleTag.innerHTML += mqCss;
 
-      // Convert the DOM tree back to a string
-      var newHtml = $(dom).children('html').html();
+    // Move the style tag into the body
+    domBody.insertBefore(styleTag, domBody.firstChild);
 
-      // We lose the doctype and <html> tags in this whole process, so add them back
-      newHtml = DOCTYPE + HTML_TAG + newHtml + '</html>';
+    // Convert the DOM tree back to a string
+    var newHtml = $(dom).children('html').html();
 
-      // If compression is enabled, compress the HTML
-      // Otherwise, fix the indentation with beautify
-      if (compressEnabled) {
-        newHtml = htmlMinifier(newHtml, compressOpts);
-      }
-      else {
-        newHtml = beautifyHtml(newHtml, beautifyOpts);
-      }
+    // We lose the doctype and <html> tags in this whole process, so add them back
+    newHtml = DOCTYPE + HTML_TAG + newHtml + '</html>';
 
-      // Finally, escape the HTML so the output in the browser is literal
-      output.innerHTML = escapeHtml(newHtml);
-    });
+    // If compression is enabled, compress the HTML
+    // Otherwise, fix the indentation with beautify
+    if (compressEnabled) {
+      newHtml = htmlMinifier(newHtml, compressOpts);
+    }
+    else {
+      newHtml = beautifyHtml(newHtml, beautifyOpts);
+    }
+
+    // Finally, escape the HTML so the output in the browser is literal
+    output.innerHTML = escapeHtml(newHtml);
+  }
+
+  function error(err) {
+    errorMessage.classList.add('is-visible');
+  }
 }
 
 function hasStyleTag(html) {
