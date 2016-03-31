@@ -70,6 +70,34 @@ describe('Inliner', () => {
     });
   });
 
+  it('appends media query-specific CSS to an existing <style> tag', done => {
+    var html = `
+      <style>
+        @media {
+          div {
+            color: red;
+          }
+        }
+      </style>
+      <p></p>
+    `;
+    var css = `
+      @media {
+        span {
+          color: red;
+        }
+      }
+    `;
+
+    inline(html, css, {
+      compress: true,
+      onSuccess(html) {
+        expect(html).to.contain('div').and.contain('span');
+        done();
+      }
+    });
+  });
+
   it('moves the <style> tag to be inside the <body>', done => {
     var html = `
       <style>
