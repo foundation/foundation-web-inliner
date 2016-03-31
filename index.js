@@ -38,7 +38,9 @@ copyButton.addEventListener('click', function() {
  * @param {string} html - Unescpaed HTML output.
  */
 function onSuccess(html) {
-  output.innerHTML = escapeHtml(html);
+  html = html.replace(/</g, '&lt;');
+  html = html.replace(/>/g, '&gt;');
+  output.innerHTML = html;
 }
 
 /**
