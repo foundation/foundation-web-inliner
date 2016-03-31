@@ -168,4 +168,19 @@ describe('Inliner', () => {
       onSuccess() {}
     })
   });
+
+  xit('does not fail if an empty <style> tag is in the input', done => {
+    var html = `<style></style><p></p>`;
+    var css = `p { color red }`;
+
+    inline(html, css, {
+      compress: true,
+      onError(err) {
+        done(err);
+      },
+      onSuccess() {
+        done();
+      }
+    })
+  });
 });
