@@ -2,7 +2,6 @@ if (!document.querySelector('[data-inliner]')) return;
 
 var inline = require('./lib/inline');
 var copyHtml = require('./lib/copyHtml');
-var escapeHtml = require('escape-html');
 
 // DOM elements
 var htmlInput = document.querySelector('[data-input-html]');
