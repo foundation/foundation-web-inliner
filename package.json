@@ -11,7 +11,7 @@
   "author": "ZURB <foundation@zurb.com> (http://get.foundation.com)",
   "license": "ISC",
   "devDependencies": {
-    "browserify": "^13.0.0",
+    "browserify": "^16.5.0",
     "mocha": "^2.4.5",
     "uglify-js": "^2.6.2",
     "watchify": "^3.7.0"
@@ -19,9 +19,13 @@
   "dependencies": {
     "cheerio": "^0.20.0",
     "clipboard-js": "^0.2.0",
-    "html-minifier": "^1.4.0",
+    "html-minifier": "^4.0.0",
     "inline-css": "^2.2.2",
     "js-beautify": "^1.6.2",
     "siphon-media-query": "^1.0.0"
+  },
+  "resolutions": {
+    "bluebird": "3.5.5",
+    "uglify-js": "2.8.29"
   }
 }
