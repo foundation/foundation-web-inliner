@@ -41,3 +41,12 @@ npm install
 Run `npm start` to start the build process. A new JavaScript bundle will be generated each time you save `index.js`.
 
 Run `npm run build` to generate a compressed bundle. Use this compressed file on the Foundation marketing site.
+
+## Running locally
+
+You can use the small wrapper script (`cli.js`) to perform inlining from
+the command line.
+
+Example usage:
+
+    $ node cli.js path/to/index.html path/to/css/foundation-emails.css > /tmp/output.html
